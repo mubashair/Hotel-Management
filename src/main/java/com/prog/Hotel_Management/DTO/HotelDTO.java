@@ -17,7 +17,7 @@ public class HotelDTO {
         this.rating = rating;
         this.isAvailable = isAvailable;
     }
-
+ 
     // Getters and Setters
     public String getName() {
         return name;
