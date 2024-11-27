@@ -57,6 +57,6 @@ public class Hotel {
 		this.isAvailable = isAvailable;
 	}
 	
-	
+	//kausar added
 	
 }
