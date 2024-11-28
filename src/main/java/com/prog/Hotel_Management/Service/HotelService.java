@@ -31,9 +31,11 @@ public class HotelService {
 		hotel.setName(dto.getName());
 		hotel.setCity(dto.getCity());
 		hotel.setAddress(dto.getAddress());
+		hotel.setRating(dto.getRating());
 		hotel.setAvailable(dto.isAvailable());
 		return hotel;
 	}
+	//
 	//Get All Hotels
 	public List<HotelDTO> getAllHotels(){
 		//Fetches all hotel entities from repo 
@@ -48,4 +50,15 @@ public class HotelService {
 		
 		return hotelDTOs;
 	}
+	//create a new Hotel
+	public HotelDTO createHotel(HotelDTO hotelDTO) {
+		//1-Convert DTO to entity
+		Hotel hotel = convertToEntity(hotelDTO);
+		//2-Save Entity to database
+		Hotel savedHotel = hotelRepository.save(hotel);
+		//3-Convert the saved entity back to DTO
+		return converToDTO(savedHotel);
+		
+	}
+	
 }
