@@ -2,6 +2,7 @@ package com.prog.Hotel_Management.Controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,8 @@ public class HotelController {
 	}
 	//Updating the existing hotel based on id
 	@PutMapping("/{id}")
-	public HotelDTO updateHotel(@PathVariable Long id, @RequestBody HotelDTO hotelDTO) {
-		return hotelService.updateHotel(hotelDTO, id);
+	public ResponseEntity<HotelDTO> updateHotel(@PathVariable Long id, @RequestBody HotelDTO hotelDTO) {
+		HotelDTO updatedHotel = hotelService.updateHotel(hotelDTO, id);
+		return ResponseEntity.ok(updatedHotel);
 	}
 }
