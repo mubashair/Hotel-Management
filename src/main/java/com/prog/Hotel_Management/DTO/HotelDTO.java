@@ -58,4 +58,12 @@ public class HotelDTO {
     public void setAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
     }
+
+	@Override
+	public String toString() {
+		return "HotelDTO [name=" + name + ", city=" + city + ", address=" + address + ", rating=" + rating
+				+ ", isAvailable=" + isAvailable + "]";
+	}
+    
+    
 }

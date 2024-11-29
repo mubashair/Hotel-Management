@@ -1,8 +1,11 @@
 package com.prog.Hotel_Management.Service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,8 @@ import com.prog.Hotel_Management.Repository.HotelRepository;
 public class HotelService {
 	@Autowired
 	private HotelRepository hotelRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(HotelService.class);
 	
 	//Convert entity to dto 
 	public HotelDTO converToDTO(Hotel hotel) {
@@ -52,10 +57,13 @@ public class HotelService {
 	}
 	//create a new Hotel
 	public HotelDTO createHotel(HotelDTO hotelDTO) {
+		logger.info("Input DTO: {}", hotelDTO);
 		//1-Convert DTO to entity
 		Hotel hotel = convertToEntity(hotelDTO);
+		logger.info("Converted entity: {}", hotel);
 		//2-Save Entity to database
 		Hotel savedHotel = hotelRepository.save(hotel);
+		logger.info("Saved entity: {}", savedHotel);
 		//3-Convert the saved entity back to DTO
 		return converToDTO(savedHotel);
 		
