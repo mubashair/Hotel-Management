@@ -1,9 +1,12 @@
 package com.prog.Hotel_Management.Service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,8 @@ import com.prog.Hotel_Management.Repository.HotelRepository;
 public class HotelService {
 	@Autowired
 	private HotelRepository hotelRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(HotelService.class);
 	
 	//Convert entity to dto 
 	public HotelDTO converToDTO(Hotel hotel) {
@@ -53,10 +58,13 @@ public class HotelService {
 	}
 	//create a new Hotel
 	public HotelDTO createHotel(HotelDTO hotelDTO) {
+		logger.info("Input DTO: {}", hotelDTO);
 		//1-Convert DTO to entity
 		Hotel hotel = convertToEntity(hotelDTO);
+		logger.info("Converted entity: {}", hotel);
 		//2-Save Entity to database
 		Hotel savedHotel = hotelRepository.save(hotel);
+		logger.info("Saved entity: {}", savedHotel);
 		//3-Convert the saved entity back to DTO
 		return converToDTO(savedHotel);
 		
@@ -64,17 +72,17 @@ public class HotelService {
 	//update an existing hotel based on id(given)
 	public HotelDTO updateHotel(HotelDTO hotelDTO, Long id) {
 		//Reterive the existing hotel entity by id
+		// Step 1: Retrieve the existing hotel entity by ID, handle Optional directly
 		Hotel existingHotel = hotelRepository.findById(id)
 				.orElseThrow(()-> new RuntimeException("Hote not found with ID:" +id));
 		
-		Optional.ofNullable(hotelDTO.getName()).ifPresent(existingHotel::setName);
-		Optional.ofNullable(hotelDTO.getCity()).ifPresent(existingHotel::setCity);
-		Optional.ofNullable(hotelDTO.getAddress()).ifPresent(existingHotel::setAddress);
-		Optional.ofNullable(hotelDTO.getRating()).ifPresent(existingHotel::setRating);
-		Optional.ofNullable(hotelDTO.isAvailable()).ifPresent(existingHotel::setAvailable);
+		// Step 2: Update the fields dynamically with a helper method
+		updateEntityFields(existingHotel, hotelDTO);
 		
+		
+		//3-Save the updated entity to the database
 		Hotel updatedHotel = hotelRepository.save(existingHotel);
-		//Converts the updated Hotel entity into a HotelDTO.
+		//4-Converts the updated Hotel entity into a HotelDTO. and return
 		//Ensures that the response sent to the client is a DTO and does not expose the entity directly.
 		//Why convert to DTO?
 
@@ -82,5 +90,14 @@ public class HotelService {
 				//Ensures security and flexibility by controlling the fields exposed to the client.
 		return converToDTO(updatedHotel);
 	}
-	
+	//2-Update the fields of existing hotel 
+	private void updateEntityFields(Hotel existingHotel, HotelDTO hotelDTO) {
+		Optional.ofNullable(hotelDTO.getName()).ifPresent(existingHotel::setName);
+		Optional.ofNullable(hotelDTO.getCity()).ifPresent(existingHotel::setCity);
+		Optional.ofNullable(hotelDTO.getAddress()).ifPresent(existingHotel::setAddress);
+		Optional.ofNullable(hotelDTO.getRating()).ifPresent(existingHotel::setRating);
+		Optional.ofNullable(hotelDTO.isAvailable()).ifPresent(existingHotel::setAvailable);
+		
+	}
+			
 }
