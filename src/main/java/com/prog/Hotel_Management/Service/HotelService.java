@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.prog.Hotel_Management.DTO.HotelDTO;
 import com.prog.Hotel_Management.Entity.Hotel;
 import com.prog.Hotel_Management.Repository.HotelRepository;
+import com.prog.Hotel_Management.exceptions.HotelNotFoundException;
 
 @Service
 public class HotelService {
@@ -76,7 +77,7 @@ public class HotelService {
 		Hotel existingHotel = hotelRepository.findById(id)
 				.orElseThrow(()-> new RuntimeException("Hote not found with ID:" +id));
 		
-		// Step 2: Update the fields dynamically with a helper method
+		// Step 2: Update the fields dynamically with a helper method named updateEntityFields()
 		updateEntityFields(existingHotel, hotelDTO);
 		
 		
@@ -90,7 +91,7 @@ public class HotelService {
 				//Ensures security and flexibility by controlling the fields exposed to the client.
 		return converToDTO(updatedHotel);
 	}
-	//2-Update the fields of existing hotel 
+	//Helper method to Update the fields of existing hotel 
 	private void updateEntityFields(Hotel existingHotel, HotelDTO hotelDTO) {
 		Optional.ofNullable(hotelDTO.getName()).ifPresent(existingHotel::setName);
 		Optional.ofNullable(hotelDTO.getCity()).ifPresent(existingHotel::setCity);
@@ -98,6 +99,21 @@ public class HotelService {
 		Optional.ofNullable(hotelDTO.getRating()).ifPresent(existingHotel::setRating);
 		Optional.ofNullable(hotelDTO.isAvailable()).ifPresent(existingHotel::setAvailable);
 		
+	}
+	//Get hotel by id
+	public HotelDTO getHotelById(Long id){
+		//Fetch the hotel entity by id
+		Hotel hotelBox = hotelRepository.findById(id)
+				.orElseThrow(()-> new HotelNotFoundException("Hotel Not Found with ID:"+ id));
+		//convert entity to DTO
+		return converToDTO(hotelBox);
+	}
+	//Delete hotel by id
+	public void deleteHotelBy(Long id) {
+		if(!hotelRepository.existsById(id)) {
+			throw new HotelNotFoundException("Hotel Not Found with ID: "+id);
+		}
+		hotelRepository.deleteById(id);
 	}
 			
 }

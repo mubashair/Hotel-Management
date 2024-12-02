@@ -2,6 +2,8 @@ package com.prog.Hotel_Management.Controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,19 +28,31 @@ public class HotelController {
 
 	// Get All Hotels
 	@GetMapping
-	public List<HotelDTO> getAllHotels(){
-		return hotelService.getAllHotels();
+	public ResponseEntity<List<HotelDTO>> getAllHotels(){
+		List<HotelDTO> hotels = hotelService.getAllHotels();
+		return new ResponseEntity<List<HotelDTO>>(hotels, HttpStatus.OK);
 	
+	}
+	//Get Hotel by id
+	@GetMapping("/{id}")
+	public ResponseEntity<HotelDTO> getHotelById(@PathVariable Long id) {
+		HotelDTO hotel = hotelService.getHotelById(id);
+		//return ResponseEntity.ok(hotelDTO);//Returns 200 OK with the hotel details
+		return new ResponseEntity<HotelDTO>(hotel, HttpStatus.OK);
+		
 	}
 	//Create a new hotel
 	@PostMapping
-	public HotelDTO createHotel(@RequestBody HotelDTO hotelDTO) {
-		return hotelService.createHotel(hotelDTO);
+	public ResponseEntity<HotelDTO> createHotel(@RequestBody HotelDTO hotelDTO) {
+		HotelDTO createdHotel = hotelService.createHotel(hotelDTO);
+		return new ResponseEntity<HotelDTO>(createdHotel, HttpStatus.CREATED);
 	}
 	//Updating the existing hotel based on id
 	@PutMapping("/{id}")
 	public ResponseEntity<HotelDTO> updateHotel(@PathVariable Long id, @RequestBody HotelDTO hotelDTO) {
-		HotelDTO updatedHotel = hotelService.updateHotel(hotelDTO, id);
-		return ResponseEntity.ok(updatedHotel);
+			HotelDTO updatedHotel = hotelService.updateHotel(hotelDTO, id);
+			//return ResponseEntity.ok(updatedHotel);
+			return new ResponseEntity<>(updatedHotel, HttpStatus.OK);
 	}
+		
 }
