@@ -3,8 +3,8 @@ package com.prog.Hotel_Management.Controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +53,12 @@ public class HotelController {
 			HotelDTO updatedHotel = hotelService.updateHotel(hotelDTO, id);
 			//return ResponseEntity.ok(updatedHotel);
 			return new ResponseEntity<>(updatedHotel, HttpStatus.OK);
+	}
+	//Delete hotel by id
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteHotelById(@PathVariable Long id){
+		hotelService.deleteHotel(id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 		
 }

@@ -109,7 +109,7 @@ public class HotelService {
 		return converToDTO(hotelBox);
 	}
 	//Delete hotel by id
-	public void deleteHotelBy(Long id) {
+	public void deleteHotel(Long id) {
 		if(!hotelRepository.existsById(id)) {
 			throw new HotelNotFoundException("Hotel Not Found with ID: "+id);
 		}
