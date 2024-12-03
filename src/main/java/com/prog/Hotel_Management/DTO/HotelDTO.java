@@ -5,12 +5,12 @@ public class HotelDTO {
     private String city;
     private String address;
     private float rating;
-    private boolean isAvailable;
+    private Boolean isAvailable;
 
     // Constructor
     public HotelDTO() {}
 
-    public HotelDTO(String name, String city, String address, float rating, boolean isAvailable) {
+    public HotelDTO(String name, String city, String address, float rating, Boolean isAvailable) {
         this.name = name;
         this.city = city;
         this.address = address;
@@ -51,11 +51,19 @@ public class HotelDTO {
         this.rating = rating;
     }
 
-    public boolean isAvailable() {
+    public Boolean isAvailable() {
         return isAvailable;
     }
 
-    public void setAvailable(boolean isAvailable) {
+    public void setAvailable(Boolean isAvailable) {
         this.isAvailable = isAvailable;
     }
+
+	@Override
+	public String toString() {
+		return "HotelDTO [name=" + name + ", city=" + city + ", address=" + address + ", rating=" + rating
+				+ ", isAvailable=" + isAvailable + "]";
+	}
+    
+    
 }

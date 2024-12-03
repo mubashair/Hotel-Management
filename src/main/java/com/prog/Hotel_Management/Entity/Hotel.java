@@ -57,6 +57,15 @@ public class Hotel {
 		this.isAvailable = isAvailable;
 	}
 	
+	//toString
+	@Override
+	public String toString() {
+		return "Hotel [id=" + id + ", name=" + name + ", city=" + city + ", address=" + address + ", rating=" + rating
+				+ ", isAvailable=" + isAvailable + "]";
+	}
+	
 	//kausar added
+	
+	
 	
 }
