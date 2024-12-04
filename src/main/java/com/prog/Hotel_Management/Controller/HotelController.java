@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prog.Hotel_Management.DTO.HotelDTO;
@@ -60,5 +61,29 @@ public class HotelController {
 		hotelService.deleteHotel(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	 // Other endpoints...
+
+    /**
+     * Endpoint to populate the database with sample hotel data.
+     * @return ResponseEntity with a message and HTTP status.
+     */
+    @GetMapping("/populate-sample")
+    public ResponseEntity<String> populateSampleHotelsData(){
+    	hotelService.populateSampleHotels();
+    	return new ResponseEntity<String>("Sample hotels added successfully", HttpStatus.CREATED);
+    }
+    //search hotel based on name or city or rating or isAvailable
+    @GetMapping("/search")
+    public ResponseEntity<List<HotelDTO>> searchHotels(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) Float rating,
+            @RequestParam(required = false) Boolean isAvailable) {
+        
+        //List<HotelDTO> hotels = hotelService.searchHotels(name, city, rating, isAvailable);
+        //return ResponseEntity.ok(hotels);
+    	List<HotelDTO> hotels = hotelService.searchHotels(name, city, rating, isAvailable);
+    	return new ResponseEntity<List<HotelDTO>>(hotels, HttpStatus.OK);
+    }
 		
 }

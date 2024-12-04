@@ -115,5 +115,40 @@ public class HotelService {
 		}
 		hotelRepository.deleteById(id);
 	}
+	//Here’s an example of populating the database using your service layer in Java:
+	public void populateSampleHotels() {
+	    List<HotelDTO> hotels = List.of(
+	        new HotelDTO("Grand Plaza Hotel", "New York", "123 Broadway, NY 10001", 4.5f, true),
+	        new HotelDTO("Oceanview Resort", "Miami", "456 Beachside Blvd, Miami, FL 33139", 4.7f, true),
+	        new HotelDTO("Mountain Inn", "Denver", "789 Mountain Rd, Denver, CO 80202", 4.3f, false),
+	        new HotelDTO("City Center Suites", "Chicago", "101 Downtown Ave, Chicago, IL 60601", 3.8f, true),
+	        new HotelDTO("Heritage Hotel", "Boston", "202 History Ln, Boston, MA 02115", 4.0f, true),
+	        new HotelDTO("Skyline Luxury", "Seattle", "303 Skyline Blvd, Seattle, WA 98101", 4.9f, true),
+	        new HotelDTO("Lakeview Retreat", "Orlando", "404 Lakeside Dr, Orlando, FL 32801", 4.6f, true),
+	        new HotelDTO("Urban Comfort", "Los Angeles", "505 Cityview St, Los Angeles, CA 90001", 4.2f, false),
+	        new HotelDTO("Coastal Paradise", "San Diego", "606 Seaview Ln, San Diego, CA 92101", 4.8f, true),
+	        new HotelDTO("Hillside Escape", "Austin", "707 Hilltop Blvd, Austin, TX 73301", 4.1f, true)
+	    );
+
+	    //hotels.forEach(hotelService::createHotel);
+	    for(HotelDTO hotelDTO : hotels) {
+	    	Hotel hotel = convertToEntity(hotelDTO);//convert dto to entity
+	    	hotelRepository.save(hotel);//save entity to repository
+	    }
+	}
+    //Search feature
+	//Call the repository method and convert the results into DTOs.
+	public List<HotelDTO> searchHotels(String name, String city, Float rating, Boolean isAvailable){
+		//Fetch the matching hotels from the repository
+		List<Hotel> hotels = hotelRepository.searchHotels(name, city, rating, isAvailable);
+		 // Convert List<Hotel> to List<HotelDTO> using a for-each loop
+		List<HotelDTO> hotelDTOs = new ArrayList<>();
+		for(Hotel hotel:hotels) {
+			HotelDTO hotelDTO = converToDTO(hotel);
+			hotelDTOs.add(hotelDTO);
+			
+		}
+		return hotelDTOs;
+	}
 			
 }
