@@ -3,6 +3,7 @@ package com.prog.Hotel_Management.Controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -83,6 +84,18 @@ public class HotelController {
         //List<HotelDTO> hotels = hotelService.searchHotels(name, city, rating, isAvailable);
         //return ResponseEntity.ok(hotels);
     	List<HotelDTO> hotels = hotelService.searchHotels(name, city, rating, isAvailable);
+    	return new ResponseEntity<List<HotelDTO>>(hotels, HttpStatus.OK);
+    }
+    //End point for sorting hotels
+    @GetMapping("/sorted")
+    public ResponseEntity<List<HotelDTO>> getSortedHotels(
+    		@RequestParam(defaultValue = "name") String sortBy, 
+    		@RequestParam(defaultValue = "asc") String sortDirection){
+    	
+    	
+    	//Fetch the sorted hotel
+    	List<HotelDTO> hotels= hotelService.getSortedHotels(sortBy, sortDirection);
+    	
     	return new ResponseEntity<List<HotelDTO>>(hotels, HttpStatus.OK);
     }
 		

@@ -1,13 +1,13 @@
 package com.prog.Hotel_Management.Service;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.prog.Hotel_Management.DTO.HotelDTO;
@@ -150,5 +150,24 @@ public class HotelService {
 		}
 		return hotelDTOs;
 	}
+	
+	//method to get the sorted hotel
+	public List<HotelDTO> getSortedHotels(String sortBy, String sortDirection){
+		
+		//Determine the sort direction
+		Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+		//Create sort object
+		Sort sort = Sort.by(direction, sortBy);
+		// Fetch sorted hotels from the repository
+		List<Hotel> hotels = hotelRepository.findAll(sort);
+		//convert the list of hotels to list of hotel dtos
+		List<HotelDTO> hotelDTOs = new ArrayList<>();
+		for(Hotel hotel:hotels) {
+			hotelDTOs.add(converToDTO(hotel));
+		}
+		
+		return hotelDTOs;
+		
+	}//end method getSortedHotels
 			
-}
+}//end class HotelService
