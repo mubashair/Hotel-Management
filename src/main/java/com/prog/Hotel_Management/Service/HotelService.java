@@ -153,6 +153,16 @@ public class HotelService {
 	
 	//method to get the sorted hotel
 	public List<HotelDTO> getSortedHotels(String sortBy, String sortDirection){
+		// Validate sortBy field
+	    List<String> validSortFields = List.of("name", "rating", "city");
+	    if (!validSortFields.contains(sortBy)) {
+	        throw new IllegalArgumentException("Invalid sort field: " + sortBy);
+	    }
+
+	    // Validate sortDirection
+	    if (!sortDirection.equalsIgnoreCase("asc") && !sortDirection.equalsIgnoreCase("desc")) {
+	        throw new IllegalArgumentException("Invalid sort direction: " + sortDirection);
+	    }
 		
 		//Determine the sort direction
 		Sort.Direction direction = Sort.Direction.fromString(sortDirection);
@@ -160,11 +170,19 @@ public class HotelService {
 		Sort sort = Sort.by(direction, sortBy);
 		// Fetch sorted hotels from the repository
 		List<Hotel> hotels = hotelRepository.findAll(sort);
+		//Creates an empty list (hotelDTOs) to store the sorted HotelDTO objects.
+		//Iterates over the sorted Hotel entities.
+		//For each Hotel, it:
+		//Calls the converToDTO(Hotel hotel) method to convert the Hotel entity into a HotelDTO.
+		//Adds the resulting HotelDTO to the hotelDTOs list.
 		//convert the list of hotels to list of hotel dtos
 		List<HotelDTO> hotelDTOs = new ArrayList<>();
 		for(Hotel hotel:hotels) {
 			hotelDTOs.add(converToDTO(hotel));
 		}
+		//Returns the sorted list of hotels in DTO format.
+		//The client (controller or frontend) will receive only the relevant fields exposed in the HotelDTO.
+
 		
 		return hotelDTOs;
 		
