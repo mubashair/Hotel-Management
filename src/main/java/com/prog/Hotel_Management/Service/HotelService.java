@@ -30,6 +30,8 @@ public class HotelService {
 		hotelDTO.setAddress(hotel.getAddress());
 		hotelDTO.setRating(hotel.getRating());
 		hotelDTO.setAvailable(hotel.isAvailable());
+		hotelDTO.setTotalRooms(hotel.getTotalRooms());
+		hotelDTO.setAvailableRooms(hotel.getAvailableRooms());
 		return hotelDTO;
 	}
 	//convert DTO to entity
@@ -40,6 +42,8 @@ public class HotelService {
 		hotel.setAddress(dto.getAddress());
 		hotel.setRating(dto.getRating());
 		hotel.setAvailable(dto.isAvailable());
+		hotel.setTotalRooms(dto.getTotalRooms());
+		hotel.setAvailableRooms(dto.getAvailableRooms());
 		return hotel;
 	}
 	//

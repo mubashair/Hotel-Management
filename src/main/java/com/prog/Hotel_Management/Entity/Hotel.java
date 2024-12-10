@@ -1,10 +1,15 @@
 package com.prog.Hotel_Management.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Hotel {
@@ -18,7 +23,34 @@ public class Hotel {
 	@Column(name = "available")
 	private boolean isAvailable;
 	
+	private Integer totalRooms;//Total rooms in hotel
+	private Integer availableRooms;//Rooms currently available for booking
 	
+	//One to many relationship with booking
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "hotel" )
+	 List<Booking> bookings = new ArrayList<>();
+	
+	
+	
+	//Getters and Setters
+	public Integer getTotalRooms() {
+		return totalRooms;
+	}
+	public void setTotalRooms(Integer totalRooms) {
+		this.totalRooms = totalRooms;
+	}
+	public Integer getAvailableRooms() {
+		return availableRooms;
+	}
+	public void setAvailableRooms(Integer availableRooms) {
+		this.availableRooms = availableRooms;
+	}
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
+	}
 	//Getter and Setter
 	public Long getId() {
 		return id;

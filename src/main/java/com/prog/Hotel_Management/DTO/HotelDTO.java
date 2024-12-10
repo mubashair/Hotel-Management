@@ -6,6 +6,8 @@ public class HotelDTO {
     private String address;
     private float rating;
     private Boolean isAvailable;
+    private Integer totalRooms;
+    private Integer availableRooms;
 
     // Constructor
     public HotelDTO() {}
@@ -18,7 +20,23 @@ public class HotelDTO {
         this.isAvailable = isAvailable;
     }
  
-    // Getters and Setters
+    public Integer getTotalRooms() {
+		return totalRooms;
+	}
+
+	public void setTotalRooms(Integer totalRooms) {
+		this.totalRooms = totalRooms;
+	}
+
+	public Integer getAvailableRooms() {
+		return availableRooms;
+	}
+
+	public void setAvailableRooms(Integer availableRooms) {
+		this.availableRooms = availableRooms;
+	}
+
+	// Getters and Setters
     public String getName() {
         return name;
     }
