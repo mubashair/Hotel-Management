@@ -120,28 +120,28 @@ public class HotelService {
 		hotelRepository.deleteById(id);
 	}
 	//Here’s an example of populating the database using your service layer in Java:
-	public void populateSampleHotels() {
-		 // List of sample hotels with total and available rooms
-	    List<HotelDTO> hotels = List.of(
-	        new HotelDTO("Grand Plaza Hotel", "New York", "123 Broadway, NY 10001", 4.5f, true, 100, 50),
-	        new HotelDTO("Oceanview Resort", "Miami", "456 Beachside Blvd, Miami, FL 33139", 4.7f, true, 200, 120),
-	        new HotelDTO("Mountain Inn", "Denver", "789 Mountain Rd, Denver, CO 80202", 4.3f, false, 80, 0),
-	        new HotelDTO("City Center Suites", "Chicago", "101 Downtown Ave, Chicago, IL 60601", 3.8f, true, 150, 75),
-	        new HotelDTO("Heritage Hotel", "Boston", "202 History Ln, Boston, MA 02115", 4.0f, true, 90, 60),
-	        new HotelDTO("Skyline Luxury", "Seattle", "303 Skyline Blvd, Seattle, WA 98101", 4.9f, true, 120, 100),
-	        new HotelDTO("Lakeview Retreat", "Orlando", "404 Lakeside Dr, Orlando, FL 32801", 4.6f, true, 130, 110),
-	        new HotelDTO("Urban Comfort", "Los Angeles", "505 Cityview St, Los Angeles, CA 90001", 4.2f, false, 75, 0),
-	        new HotelDTO("Coastal Paradise", "San Diego", "606 Seaview Ln, San Diego, CA 92101", 4.8f, true, 140, 80),
-	        new HotelDTO("Hillside Escape", "Austin", "707 Hilltop Blvd, Austin, TX 73301", 4.1f, true, 100, 90)
-	    );
+		public void populateSampleHotels() {
+			 // List of sample hotels with total and available rooms
+		    List<HotelDTO> hotels = List.of(
+		        new HotelDTO("Grand Plaza Hotel", "New York", "123 Broadway, NY 10001", 4.5f, true, 100, 50),
+		        new HotelDTO("Oceanview Resort", "Miami", "456 Beachside Blvd, Miami, FL 33139", 4.7f, true, 200, 120),
+		        new HotelDTO("Mountain Inn", "Denver", "789 Mountain Rd, Denver, CO 80202", 4.3f, false, 80, 0),
+		        new HotelDTO("City Center Suites", "Chicago", "101 Downtown Ave, Chicago, IL 60601", 3.8f, true, 150, 75),
+		        new HotelDTO("Heritage Hotel", "Boston", "202 History Ln, Boston, MA 02115", 4.0f, true, 90, 60),
+		        new HotelDTO("Skyline Luxury", "Seattle", "303 Skyline Blvd, Seattle, WA 98101", 4.9f, true, 120, 100),
+		        new HotelDTO("Lakeview Retreat", "Orlando", "404 Lakeside Dr, Orlando, FL 32801", 4.6f, true, 130, 110),
+		        new HotelDTO("Urban Comfort", "Los Angeles", "505 Cityview St, Los Angeles, CA 90001", 4.2f, false, 75, 0),
+		        new HotelDTO("Coastal Paradise", "San Diego", "606 Seaview Ln, San Diego, CA 92101", 4.8f, true, 140, 80),
+		        new HotelDTO("Hillside Escape", "Austin", "707 Hilltop Blvd, Austin, TX 73301", 4.1f, true, 100, 90)
+		    );
 
-	    //hotels.forEach(hotelService::createHotel);
-	    // Iterate over each sample hotel and save it to the database
-	    for(HotelDTO hotelDTO : hotels) {
-	    	Hotel hotel = convertToEntity(hotelDTO);//convert dto to entity
-	    	hotelRepository.save(hotel);//save entity to repository
-	    }
-	}
+		    //hotels.forEach(hotelService::createHotel);
+		    // Iterate over each sample hotel and save it to the database
+		    for(HotelDTO hotelDTO : hotels) {
+		    	Hotel hotel = convertToEntity(hotelDTO);//convert dto to entity
+		    	hotelRepository.save(hotel);//save entity to repository
+		    }
+		}
     //Search feature
 	//Call the repository method and convert the results into DTOs.
 	public List<HotelDTO> searchHotels(String name, String city, Float rating, Boolean isAvailable){
