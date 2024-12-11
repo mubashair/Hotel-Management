@@ -6,21 +6,29 @@ public class HotelDTO {
     private String address;
     private float rating;
     private Boolean isAvailable;
-    private Integer totalRooms;
-    private Integer availableRooms;
+    private Integer totalRooms;//Total rooms in hotel
+    private Integer availableRooms;//Rooms currently available for booking
 
     // Constructor
     public HotelDTO() {}
 
-    public HotelDTO(String name, String city, String address, float rating, Boolean isAvailable) {
-        this.name = name;
-        this.city = city;
-        this.address = address;
-        this.rating = rating;
-        this.isAvailable = isAvailable;
-    }
+    
  
-    public Integer getTotalRooms() {
+    public HotelDTO(String name, String city, String address, float rating, Boolean isAvailable, Integer totalRooms,
+			Integer availableRooms) {
+		
+		this.name = name;
+		this.city = city;
+		this.address = address;
+		this.rating = rating;
+		this.isAvailable = isAvailable;
+		this.totalRooms = totalRooms;
+		this.availableRooms = availableRooms;
+	}
+
+
+
+	public Integer getTotalRooms() {
 		return totalRooms;
 	}
 
