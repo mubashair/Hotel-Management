@@ -10,10 +10,25 @@ public class BookingDTO {
     private Date checkOutDate; // Check-out date
     private Integer roomsBooked; // Number of rooms booked
     
+    private String hotelName; // New field for hotel name
+    private String city; // New field for hotel city
+    
     
     //Getters and Setters
 	public Long getId() {
 		return id;
+	}
+	public String getHotelName() {
+		return hotelName;
+	}
+	public void setHotelName(String hotelName) {
+		this.hotelName = hotelName;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
 	}
 	public void setId(Long id) {
 		this.id = id;

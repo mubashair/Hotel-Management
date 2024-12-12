@@ -28,6 +28,8 @@ public class BookingService {
 		BookingDTO bookingDTO = new BookingDTO();
 		bookingDTO.setId(booking.getId());
 		bookingDTO.setHotelId(booking.getHotel().getId());// // Setting hotel ID from the Hotel entity
+		bookingDTO.setHotelName(booking.getHotel().getName());//// Fetch hotel name
+		bookingDTO.setCity(booking.getHotel().getCity());//Fetch hotel city
 		bookingDTO.setGuestName(booking.getGuestName());
 		bookingDTO.setCheckInDate(booking.getCheckInDate());
 		bookingDTO.setCheckOutDate(booking.getCheckOutDate());
@@ -43,7 +45,7 @@ public class BookingService {
 	    // This establishes the relationship between the booking and its hotel
 	    //Relationship comment: Highlights the significance of setting the hotel field 
 	    //to establish the relationship between the Booking and Hotel entities.
-	    booking.setHotel(hotel);
+	    booking.setHotel(hotel);// Set hotel reference
 
 	    // Set the guest name in the Booking entity using the value from the BookingDTO
 	    // This is the name of the person making the booking
