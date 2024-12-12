@@ -1,5 +1,8 @@
 package com.prog.Hotel_Management.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +11,7 @@ import com.prog.Hotel_Management.Entity.Booking;
 import com.prog.Hotel_Management.Entity.Hotel;
 import com.prog.Hotel_Management.Repository.BookingRepository;
 import com.prog.Hotel_Management.Repository.HotelRepository;
+import com.prog.Hotel_Management.exceptions.BookingNotFoundException;
 import com.prog.Hotel_Management.exceptions.HotelNotFoundException;
 import com.prog.Hotel_Management.exceptions.InsufficientRoomsException;
 import com.prog.Hotel_Management.exceptions.InvalidBookingException;
@@ -94,5 +98,28 @@ public class BookingService {
 		// Convert the saved Booking entity back into a BookingDTO and return it as the response
 		BookingDTO  responseBookingDTO = convertToDTOs(savedBooking);
 		return responseBookingDTO;
+	}
+	//Get all bookings
+	public List<BookingDTO> getAllBookings(){
+		// Fetch all bookings from the repository
+		List<Booking> bookings = bookingRepository.findAll();
+		// Check if the bookings list is empty
+		if(bookings.isEmpty()) {
+			throw new BookingNotFoundException("No bookings available at the moment.");//Custom error message for no bookings
+		}
+		 // Convert each Booking entity to BookingDTO
+		// Initialize an empty list to hold BookingDTO objects
+		List<BookingDTO> bookingDTOs = new ArrayList<>();
+		// Iterate through the list of Booking entities
+		for(Booking booking:bookings) {
+			 // Convert each Booking entity to a BookingDTO object and add it to the list
+			bookingDTOs.add(convertToDTOs(booking));//For each Booking entity:
+			//The convertToDTO method is called to map the Booking entity to its corresponding BookingDTO object.
+			//The converted BookingDTO object is added to the bookingDTOs list.
+		}
+		// Return the list of BookingDTO objects
+		//This list can be used in the service layer, returned in a controller response, or passed to another method.
+		return bookingDTOs;
+		
 	}
 }
