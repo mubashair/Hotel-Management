@@ -1,6 +1,7 @@
 package com.prog.Hotel_Management.Service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,9 +118,33 @@ public class BookingService {
 			//The convertToDTO method is called to map the Booking entity to its corresponding BookingDTO object.
 			//The converted BookingDTO object is added to the bookingDTOs list.
 		}
-		// Return the list of BookingDTO objects
+		// Return the list of populated BookingDTO objects
 		//This list can be used in the service layer, returned in a controller response, or passed to another method.
 		return bookingDTOs;
 		
+	}//end method get all bookings
+	
+	
+	//Find bookings by guestName
+	public List<BookingDTO> findBookingsByGuestName(String guestName){
+		//Fetch booking by guest name
+		List<Booking> bookings = bookingRepository.findByGuestName(guestName);
+		//Handle case when no bookings are found
+		if(bookings.isEmpty()) {
+			throw new BookingNotFoundException("No Booking found for the guest name "+ guestName);
+		}
+		 // Convert the list of Booking entities to BookingDTOs
+		// Initialize an empty list to hold BookingDTO objects
+		List<BookingDTO> bookingDTOs = new ArrayList<>();
+		// Iterate through the list of Booking entities
+		for(Booking booking: bookings) {
+			 bookingDTOs.add(convertToDTOs(booking));// Convert each Booking entity to a BookingDTO object and add it to the list
+			//The convertToDTO method is called to map the Booking entity to its corresponding BookingDTO object.
+			//The converted BookingDTO object is added to the bookingDTOs list.
+		}
+		// Return the list of populated BookingDTO objects
+	    //This list can be used in the service layer, returned in a controller response, or passed to another method.
+		return bookingDTOs;
 	}
+	
 }
