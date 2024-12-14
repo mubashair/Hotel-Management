@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,10 +38,16 @@ public class BookingController {
 		}
 		
 	}//end get all bookings
-	//Bookings by guest name
+	//Get Bookings by guest name
 	@GetMapping("/bookings/by-guest-name")
 	public ResponseEntity<List<BookingDTO>> getBookingsByGuestName(@RequestParam String guestName){
 		List<BookingDTO> bookingsByGuestName = bookingService.findBookingsByGuestName(guestName);
 		return ResponseEntity.ok(bookingsByGuestName);
+	}//end getBookingsByGuestName
+	//Cancel Booking end point
+	@DeleteMapping("/booking/{id}/cancel")
+	ResponseEntity<String> cancelBooking(@PathVariable Long id){
+		bookingService.cancelBooking(id);
+		return ResponseEntity.ok("Booking canceled successfully!");
 	}
 }

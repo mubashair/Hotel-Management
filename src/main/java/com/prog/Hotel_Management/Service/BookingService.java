@@ -1,9 +1,10 @@
 package com.prog.Hotel_Management.Service;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,8 @@ public class BookingService {
 	}
 	@Autowired
 	private HotelRepository hotelRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(BookingService.class);
 	
 	//Convert Booking entity to booking DTO
 	public BookingDTO convertToDTOs(Booking booking) {
@@ -145,6 +148,37 @@ public class BookingService {
 		// Return the list of populated BookingDTO objects
 	    //This list can be used in the service layer, returned in a controller response, or passed to another method.
 		return bookingDTOs;
+	}
+	//Cancel a booking by its ID
+	public void cancelBooking(Long bookingId) {
+		// Step 1: Retrieve the booking by ID
+		 // Look for the booking in the database using the provided booking ID.
+        // If the booking does not exist, throw a BookingNotFoundException with a clear message
+		logger.info("Attempting to cancel booking with ID: {}", bookingId);
+		Booking booking = bookingRepository.findById(bookingId)
+				.orElseThrow(() -> new BookingNotFoundException("Booking not found with ID:"+bookingId));
+		// Step 2: Retrieve the associated hotel
+		// Access the hotel entity associated with the booking.
+        // This ensures that we can update the available rooms for this specific hotel.
+		Hotel hotel = booking.getHotel();
+		// Step 3: Update the hotel's available rooms
+		 // Add the number of rooms booked back to the hotel's available rooms.
+        // This ensures the hotel inventory is accurate after a cancellation.
+		hotel.setAvailableRooms(hotel.getAvailableRooms() + booking.getRoomsBooked());
+		logger.info("Updated available rooms for hotel with ID: {}", hotel.getId());
+		// Persist the updated hotel entity to the database.
+		hotelRepository.save(hotel);
+		// Step 4: Delete the booking
+		// Remove the booking record from the database using the booking ID.
+        // This completes the cancellation process by removing the booking entry.
+		bookingRepository.deleteById(bookingId);
+		logger.info("Successfully canceled booking with ID: {}", bookingId);
+		
+		//logger.info("Canceling booking with ID: {}", bookingId);
+		//logger.info("Updated available rooms for hotel with ID: {}", hotel.getId());
+
+		
+		
 	}
 	
 }

@@ -37,4 +37,16 @@ public class GlobalExceptionHandler {
         // Return a ResponseEntity with the error details and HTTP status
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    @ExceptionHandler(BookingNotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleGlobalException(BookingNotFoundException ex) {
+        // Create an ErrorDetails object for generic exceptions
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDateTime.now(),
+                ex.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value()
+        );
+
+        // Return a ResponseEntity with the error details and HTTP status
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

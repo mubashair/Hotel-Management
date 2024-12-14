@@ -3,6 +3,7 @@ package com.prog.Hotel_Management.Entity;
 
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +20,7 @@ public class Booking {
 	
 	//many to one relationship with Hotel entity
 	//The @ManyToOne annotation establishes the relationship with the Hotel entity.
-	@ManyToOne
+	@ManyToOne//(cascade = CascadeType.MERGE)// Ensures updates to Hotel propagate
 	@JoinColumn(name = "hotel_id", nullable=false)
 	private Hotel hotel;//reference to the hotel being booked
 	
